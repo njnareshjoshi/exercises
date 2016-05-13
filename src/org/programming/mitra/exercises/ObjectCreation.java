@@ -1,4 +1,4 @@
-package org.programming.mitra.excercises;
+package org.programming.mitra.exercises;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -15,7 +15,7 @@ public class ObjectCreation {
 
 		System.out.println(emp1 + ", hashcode : " + emp1.hashCode());
 
-		Employee emp2 = (Employee) Class.forName("org.programming.mitra.excercises.Employee").newInstance();
+		Employee emp2 = (Employee) Class.forName("org.programming.mitra.exercises.Employee").newInstance();
 
 		// Or we can simply do this
 		// Employee emp2 = Employee.class.newInstance();
@@ -25,7 +25,6 @@ public class ObjectCreation {
 		System.out.println(emp2 + ", hashcode : " + emp2.hashCode());
 
 		Constructor<Employee> constructor = Employee.class.getConstructor();
-
 		Employee emp3 = constructor.newInstance();
 		emp3.setName("Yogesh");
 
