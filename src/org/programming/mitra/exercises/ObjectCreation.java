@@ -68,7 +68,7 @@ class Employee implements Cloneable, Serializable {
 	private String name;
 
 	public Employee() {
-		System.out.println("Employee Constructor Called =======>");
+		System.out.println("Employee Constructor Called...");
 	}
 
 	public String getName() {
