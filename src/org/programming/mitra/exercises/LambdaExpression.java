@@ -14,20 +14,19 @@ public class LambdaExpression {
 
 		// Example : Thread Creation
 		// Old Way
-		Runnable r1 = new Runnable() {
-
+		Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
-				System.out.println("In thread t1");
+				System.out.println("Running thread using anonymous class");
 			}
 		};
-		Thread t1 = new Thread(r1);
-		t1.start();
+		Thread thread = new Thread(runnable);
+		thread.start();
 
 		// New Way
-		Runnable r2 = () -> System.out.println("In thread t2");
-		Thread t2 = new Thread(r2);
-		t2.start();
+		runnable = () -> System.out.println("Running thread using lambda expression");
+		thread = new Thread(runnable);
+		thread.start();
 
 		// Example : Comparator Creation
 		Comparator<Integer> comparator = (Integer i, Integer j) -> i.compareTo(j);
