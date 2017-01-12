@@ -1,36 +1,5 @@
 package org.programming.mitra.exercises;
 
-
-public class CopyConstructorExample {
-
-    public static void main(String[] args) {
-        Mammal mammal = new Mammal("Human");
-        Human human = new Human("Human", "Naresh");
-
-        Mammal mammalHuman = new Human("Human", "Mahesh");
-
-
-        Mammal clonedMammal = mammal.clone();
-        Human clonedHuman = human.clone();
-
-        //Mammal clonedMammalHuman = new Mammal(mammalHuman);
-        //Mammal clonedMammalHuman = new Human(mammalHuman);
-        Mammal clonedMammalHuman = mammalHuman.clone();
-
-        System.out.println("Object " + mammal + " and copied object " + clonedMammal + " are == : " + (mammal == clonedMammal));
-        System.out.println("Object " + mammal + " and copied object " + clonedMammal + " are equal : " + (mammal.equals(clonedMammal)) + "\n");
-
-
-        System.out.println("Object " + human + " and copied object " + clonedHuman + " are == : " + (human == clonedHuman));
-        System.out.println("Object " + human + " and copied object " + clonedHuman + " are equal : " + (human.equals(clonedHuman)) + "\n");
-
-        System.out.println("Object " + mammalHuman + " and copied object " + clonedMammalHuman + " are == : " + (mammalHuman == clonedMammalHuman));
-        System.out.println("Object " + mammalHuman + " and copied object " + clonedMammalHuman + " are equal : " + (mammalHuman.equals(clonedMammalHuman)) + "\n");
-
-    }
-
-}
-
 class Mammal {
 
     protected String type;
@@ -43,7 +12,7 @@ class Mammal {
         this.type = new String(original.type);
     }
 
-    public Mammal clone() {
+    public Mammal cloneObject() {
         return new Mammal(this);
     }
 
@@ -84,7 +53,8 @@ class Human extends Mammal {
         this.name = new String(original.name);
     }
 
-    public Human clone() {
+    @Override
+    public Human cloneObject() {
         return new Human(this);
     }
 
@@ -113,4 +83,34 @@ class Human extends Mammal {
     public String toString() {
         return "Human{" + "type='" + type + "', name='" + name + "'}";
     }
+}
+
+public class CopyConstructorExample {
+
+    public static void main(String[] args) {
+        Mammal mammal = new Mammal("Human");
+        Human human = new Human("Human", "Naresh");
+
+        Mammal mammalHuman = new Human("Human", "Mahesh");
+
+
+        Mammal clonedMammal = mammal.cloneObject();
+        Human clonedHuman = human.cloneObject();
+
+        //Mammal clonedMammalHuman = new Mammal(mammalHuman);
+        //Mammal clonedMammalHuman = new Human(mammalHuman);
+        Mammal clonedMammalHuman = mammalHuman.cloneObject();
+
+        System.out.println("Object " + mammal + " and copied object " + clonedMammal + " are == : " + (mammal == clonedMammal));
+        System.out.println("Object " + mammal + " and copied object " + clonedMammal + " are equal : " + (mammal.equals(clonedMammal)) + "\n");
+
+
+        System.out.println("Object " + human + " and copied object " + clonedHuman + " are == : " + (human == clonedHuman));
+        System.out.println("Object " + human + " and copied object " + clonedHuman + " are equal : " + (human.equals(clonedHuman)) + "\n");
+
+        System.out.println("Object " + mammalHuman + " and copied object " + clonedMammalHuman + " are == : " + (mammalHuman == clonedMammalHuman));
+        System.out.println("Object " + mammalHuman + " and copied object " + clonedMammalHuman + " are equal : " + (mammalHuman.equals(clonedMammalHuman)) + "\n");
+
+    }
+
 }
