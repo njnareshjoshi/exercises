@@ -9,7 +9,15 @@ class Mammal {
     }
 
     public Mammal(Mammal original) {
-        this.type = new String(original.type);
+        this.type = original.type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Mammal cloneObject() {
@@ -50,7 +58,15 @@ class Human extends Mammal {
 
     public Human(Human original) {
         super(original.type);
-        this.name = new String(original.name);
+        this.name = original.name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -93,12 +109,14 @@ public class CopyConstructorExample {
 
         Mammal mammalHuman = new Human("Human", "Mahesh");
 
+        Mammal clonedMammal = new Mammal(mammal);
+        //Mammal clonedMammal = mammal.cloneObject();
 
-        Mammal clonedMammal = mammal.cloneObject();
-        Human clonedHuman = human.cloneObject();
+        Human clonedHuman = new Human(human);
+        //Human clonedHuman = human.cloneObject();
 
+        //Mammal clonedMammalHuman = new Human(mammalHuman); // compilation error
         //Mammal clonedMammalHuman = new Mammal(mammalHuman);
-        //Mammal clonedMammalHuman = new Human(mammalHuman);
         Mammal clonedMammalHuman = mammalHuman.cloneObject();
 
         System.out.println("Object " + mammal + " and copied object " + clonedMammal + " are == : " + (mammal == clonedMammal));

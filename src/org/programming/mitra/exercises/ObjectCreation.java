@@ -16,7 +16,7 @@ public class ObjectCreation {
 
 		System.out.println(emp1 + ", hashcode : " + emp1.hashCode());
 
-		
+
 		// By using Class class's newInstance() method
 		Employee emp2 = (Employee) Class.forName("org.programming.mitra.exercises.Employee").newInstance();
 
@@ -27,7 +27,7 @@ public class ObjectCreation {
 
 		System.out.println(emp2 + ", hashcode : " + emp2.hashCode());
 
-		
+
 		// By using Constructor class's newInstance() method
 		Constructor<Employee> constructor = Employee.class.getConstructor();
 		Employee emp3 = constructor.newInstance();
@@ -41,9 +41,9 @@ public class ObjectCreation {
 
 		System.out.println(emp4 + ", hashcode : " + emp4.hashCode());
 
-		
+
 		// By using Deserialization
-		
+
 		// Serialization
 		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("data.obj"));
 
