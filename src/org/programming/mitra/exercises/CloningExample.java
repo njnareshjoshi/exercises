@@ -129,7 +129,8 @@ class Person implements Cloneable {
         }
     }
 
-    // No @Override, means we are not overriding clone
+    // We can also create this any other name
+    @Override
     public Person clone() throws CloneNotSupportedException {
         Person clonedObj = (Person) super.clone();
         clonedObj.name = new String(this.name);
