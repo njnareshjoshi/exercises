@@ -209,6 +209,7 @@ class City implements Cloneable {
         this.name = name;
     }
 
+    @Override
     public City clone() throws CloneNotSupportedException {
         return (City) super.clone();
     }
