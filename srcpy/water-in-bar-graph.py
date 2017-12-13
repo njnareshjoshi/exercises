@@ -33,9 +33,9 @@ def countWater(array) :
 	for count in range(1, n-1) :
 		quantity = min(max_left_list[count], max_right_list[count]) - array[count];
 		total_quantity += quantity
-		print(f'{count} {max_left_list[count]} {max_right_list[count]} {quantity}')
+		print(f'{count} {max_left_list[count]} {max_right_list[count]} {quantity} {total_quantity}')
 
 	return total_quantity
 
 
-print(countWater([5, 1, 3, 4]))
+print(countWater([5, 1, 3, 4, 5]))
