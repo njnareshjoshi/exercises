@@ -19,14 +19,15 @@ public class VariableShadowingExample {
         // Accessing child's variable from parent's reference by type casting
         System.out.println(((Child) parent).x);// Output - "Child`s Instance Variable"
     }
-}
 
-    class Parent {
+    static class Parent {
 
         // Declaring instance variable by name `x`
         String x = "Parent`s Instance Variable";
 
-        public void printInstanceVariable() { System.out.println(x); }
+        public void printInstanceVariable() {
+            System.out.println(x);
+        }
 
         public void printLocalVariable() {
             // Shadowing instance variable `x` by a local variable with same name
@@ -38,7 +39,7 @@ public class VariableShadowingExample {
         }
     }
 
-    class Child extends Parent {
+    static class Child extends Parent {
 
         // Hiding Parent class's variable `x` by defining a variable in child class with same name.
         String x = "Child`s Instance Variable";
@@ -51,5 +52,6 @@ public class VariableShadowingExample {
             System.out.print(", " + super.x + "\n");
         }
     }
+}
 
 
