@@ -1,4 +1,4 @@
-package org.eagleinvsys.azure.azuresqldwapp;
+package org.programming.mitra.exercises;
 
 public class IntegerCacheExample
 {
