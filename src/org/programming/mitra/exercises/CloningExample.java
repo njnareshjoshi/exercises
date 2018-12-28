@@ -7,6 +7,12 @@ import java.io.ObjectOutputStream;
 
 /**
  * @author Naresh Joshi
+ *
+ * See complete articles on below links
+ *
+ * https://www.programmingmitra.com/2016/11/Java-Cloning-Types-of-Cloning-Shallow-Deep-in-Details-with-Example.html,
+ * https://www.programmingmitra.com/2017/01/Java-cloning-copy-constructor-versus-Object-clone-or-cloning.html,
+ * https://www.programmingmitra.com/2017/01/java-cloning-why-copy-constructors-are-not-sufficient-or-good.html
  */
 public class CloningExample {
 

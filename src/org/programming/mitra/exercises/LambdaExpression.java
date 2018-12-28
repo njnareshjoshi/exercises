@@ -7,6 +7,13 @@ import java.util.Comparator;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
+/**
+ * @author Naresh Joshi
+ *
+ * See complete article on below link
+ *
+ * https://www.programmingmitra.com/2016/06/java-lambda-expression-explained-with-example.html
+ */
 public class LambdaExpression {
 
 	@SuppressWarnings("unused")

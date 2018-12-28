@@ -1,5 +1,12 @@
 package org.programming.mitra.exercises;
 
+/**
+ * @author Naresh Joshi
+ *
+ * See complete article on below link
+ *
+ * https://www.programmingmitra.com/2017/04/Difference-Between-ClassNotFoundException-and-NoClassDefFoundError.html
+ */
 public class ClassNotFoundExceptionExample {
     public static void main(String[] args) throws Exception {
 

@@ -6,7 +6,31 @@ import java.util.Date;
 
 /**
  * @author Naresh Joshi
+ *
+ * See complete articles on below links
+ *
+ * https://www.programmingmitra.com/2018/02/how-to-create-immutable-class-in-java.html,
+ * https://www.programmingmitra.com/2018/02/why-string-is-immutable-and-final-in-java.html
  */
+public class ImmutableClassExample {
+
+    public static void main(String[] args) throws ParseException {
+        Date dob = new SimpleDateFormat("dd-mm-yyyy").parse("10-12-1993");
+        ImmutableEmployee employee = new ImmutableEmployee(1, "Naresh", dob);
+
+        System.out.println(employee); // Prints - ImmutableEmployee{id=1, name='Naresh', dob=Sun Jan 10 00:12:00 IST 1993}
+
+        dob.setMonth(1);
+        System.out.println(dob); // Prints - Wed Feb 10 00:12:00 IST 1993
+
+        Date temp = employee.getDob();
+        temp.setMonth(2);
+        System.out.println(temp); // Prints - Wed Mar 10 00:12:00 IST 1993
+
+        System.out.println(employee.getDob()); // Prints - Sun Jan 10 00:12:00 IST 1993
+        System.out.println(employee); // Prints - ImmutableEmployee{id=1, name='Naresh', dob=Sun Jan 10 00:12:00 IST 1993}
+    }
+}
 
 // 1. Declare your class as final, So other classes can't extend it and break its immutability
 final class ImmutableEmployee {
@@ -48,24 +72,4 @@ final class ImmutableEmployee {
                 '}';
     }
 
-}
-
-public class ImmutableClassExample {
-
-    public static void main(String[] args) throws ParseException {
-        Date dob = new SimpleDateFormat("dd-mm-yyyy").parse("10-12-1993");
-        ImmutableEmployee employee = new ImmutableEmployee(1, "Naresh", dob);
-
-        System.out.println(employee); // Prints - ImmutableEmployee{id=1, name='Naresh', dob=Sun Jan 10 00:12:00 IST 1993}
-
-        dob.setMonth(1);
-        System.out.println(dob); // Prints - Wed Feb 10 00:12:00 IST 1993
-
-        Date temp = employee.getDob();
-        temp.setMonth(2);
-        System.out.println(temp); // Prints - Wed Mar 10 00:12:00 IST 1993
-
-        System.out.println(employee.getDob()); // Prints - Sun Jan 10 00:12:00 IST 1993
-        System.out.println(employee); // Prints - ImmutableEmployee{id=1, name='Naresh', dob=Sun Jan 10 00:12:00 IST 1993}
-    }
 }

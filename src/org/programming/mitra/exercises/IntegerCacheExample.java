@@ -1,5 +1,12 @@
 package org.programming.mitra.exercises;
 
+/**
+ * @author Naresh Joshi
+ *
+ * See complete article on below link
+ *
+ * https://www.programmingmitra.com/2018/11/java-integer-cache.html
+ */
 public class IntegerCacheExample
 {
     public static void main(String[] args)

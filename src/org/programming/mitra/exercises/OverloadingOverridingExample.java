@@ -2,6 +2,13 @@ package org.programming.mitra.exercises;
 
 /**
  * @author Naresh Joshi
+ *
+ * See complete articles on below links
+ *
+ * https://www.programmingmitra.com/2017/05/everything-about-method-overloading-vs-method-overriding.html,
+ * https://www.programmingmitra.com/2017/12/why-we-should-follow-method-overriding-rules.html,
+ * https://www.programmingmitra.com/2017/05/how-does-jvm-handle-method-overriding-internally.html,
+ * https://www.programmingmitra.com/2018/11/why-instance-variable-of-super-class-is-not-overridden-In-sub-class.html
  */
 public class OverloadingOverridingExample {
 

@@ -7,6 +7,14 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
 
+/**
+ * @author Naresh Joshi
+ *
+ * See complete articles on below links
+ *
+ * https://www.programmingmitra.com/2016/05/different-ways-to-create-objects-in-java-with-example.html,
+ * https://www.programmingmitra.com/2016/05/creating-objects-through-reflection-in-java-with-example.html
+ */
 public class ObjectCreation {
 	public static void main(String... args) throws Exception {
 
