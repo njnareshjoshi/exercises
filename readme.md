@@ -1,4 +1,4 @@
-This repository contains code exercises for my blog [ProgrammingMitra](https://www.programmingmitra.com).
+This repository along with the [articles](https://github.com/njnareshjoshi/articles) repository contains coding examples for my blog [ProgrammingMitra](https://www.programmingmitra.com).
 
 #### ClassNotFoundException Vs NoClassDefFoundError
 * [Difference Between Classnotfoundexception And Noclassdeffounderror](https://www.programmingmitra.com/2017/04/Difference-Between-ClassNotFoundException-and-NoClassDefFoundError.html)
