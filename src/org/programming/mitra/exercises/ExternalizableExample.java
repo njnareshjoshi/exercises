@@ -1,23 +1,15 @@
 package org.programming.mitra.exercises;
 
+import java.io.Externalizable;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInput;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 
-
-/**
- * See complete articles on below links.
- *
- * https://www.programmingmitra.com/2019/08/what-is-serialization-everything-about-java-serialization-explained-with-example.html,
- * https://www.programmingmitra.com/2019/08/how-to-customize-serialization-in-java-by-using-externalizable-interface.html,
- * https://www.programmingmitra.com/2016/05/different-ways-to-create-objects-in-java-with-example.html
- *
- * @author Naresh Joshi
- */
-public class SerializationExample
+public class ExternalizableExample
 {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException
@@ -29,8 +21,8 @@ public class SerializationExample
         serialize(empObj);
 
         // Deserialization
-        Employee deserialisedEmpObj = deserialize();
-        System.out.println("Object after deserialization => " + deserialisedEmpObj.toString());
+        Employee deserializedEmpObj = deserialize();
+        System.out.println("Object after deserialization => " + deserializedEmpObj.toString());
     }
 
     // Serialization code
@@ -53,20 +45,31 @@ public class SerializationExample
         }
     }
 
-    // If we use Serializable interface, static and transient variables do not get serialized
-    static class Employee implements Serializable
+    // Using Externalizable, complete serialization/deserialization logic becomes our responsibility,
+    // We need to tell what to serialize using writeExternal() method and what to deserialize using readExternal(),
+    // We can even serialize/deserialize static and transient variables,
+    // With implementation of writeExternal() and readExternal(),  methods writeObject() and readObject() becomes redundant and they do not get called.
+    static class Employee implements Externalizable
     {
         // This serialVersionUID field is necessary for Serializable as well as Externalizable to provide version control,
         // Compiler will provide this field if we do not provide it which might change if we modify class structure of our class, and we will get InvalidClassException,
         // If we provide a value to this field and do not change it, serialization-deserialization will not fail if we change our class structure.
         private static final long serialVersionUID = 2L;
 
-        private final String firstName; // Serialization process do not invoke the constructor but it can assign values to final fields
-        private transient String middleName; // transient variables will not be serialized, serialised object holds null
+        private String firstName;
+        private transient String middleName; // Using Externalizable, we can even serialize/deserialize transient variables, so declaring fields transient becomes unnecessary.
         private String lastName;
         private int age;
-        private static String department; // static variables will not be serialized, serialised object holds null
+        private static String department; // Using Externalizable, we can even serialize/deserialize static variables according to our need.
 
+        // Mandatory to have to make our class Externalizable
+        // When an Externalizable object is reconstructed, the object is created using public no-arg constructor before the readExternal method is called.
+        // If a public no-arg constructor is not present then a InvalidClassException is thrown at runtime.
+        public Employee()
+        {
+        }
+
+        // All-arg constructor to create objects manually
         public Employee(String firstName, String middleName, String lastName, int age, String department)
         {
             this.firstName = firstName;
@@ -88,23 +91,43 @@ public class SerializationExample
             }
         }
 
-        // Custom serialization logic,
-        // This will allow us to have additional serialization logic on top of the default one e.g. encrypting object before serialization
+        // Custom serialization logic, It will be called only if we have implemented Serializable instead of Externalizable.
         private void writeObject(ObjectOutputStream oos) throws IOException
         {
             System.out.println("Custom serialization logic invoked.");
-            oos.defaultWriteObject(); // Calling the default serialization logic
         }
 
-        // Custom deserialization logic
-        // This will allow us to have additional deserialization logic on top of the default one e.g. decrypting object after deserialization
+        // Custom deserialization logic, It will be called only if we have implemented Serializable instead of Externalizable.
         private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException
         {
             System.out.println("Custom deserialization logic invoked.");
+        }
 
-            ois.defaultReadObject(); // Calling the default deserialization logic
+        @Override
+        // We need to tell what to serialize in writeExternal() method
+        public void writeExternal(ObjectOutput out) throws IOException
+        {
+            System.out.println("Custom externalizable serialization logic invoked.");
 
-            // Age validation is just an example but there might some scenario where we might need to write some custom deserialization logic
+            out.writeUTF(firstName);
+            out.writeUTF(middleName);
+            out.writeUTF(lastName);
+            out.writeInt(age);
+            out.writeUTF(department);
+        }
+
+        @Override
+        // We need to tell what to deserialize in readExternal() method
+        public void readExternal(ObjectInput in) throws IOException
+        {
+            System.out.println("Custom externalizable serialization logic invoked.");
+
+            firstName = in.readUTF();
+            middleName = in.readUTF();
+            lastName = in.readUTF();
+            age = in.readInt();
+            department = in.readUTF();
+
             validateAge();
         }
 
@@ -113,5 +136,6 @@ public class SerializationExample
         {
             return String.format("Employee {firstName='%s', middleName='%s', lastName='%s', age='%s', department='%s'}", firstName, middleName, lastName, age, department);
         }
+
     }
 }
