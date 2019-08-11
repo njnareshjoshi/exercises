@@ -9,12 +9,21 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
+/**
+ * See complete articles on below links.
+ *
+ * https://www.programmingmitra.com/2019/08/what-is-serialization-everything-about-java-serialization-explained-with-example.html,
+ * https://www.programmingmitra.com/2019/08/how-to-customize-serialization-in-java-by-using-externalizable-interface.html,
+ * https://www.programmingmitra.com/2016/05/different-ways-to-create-objects-in-java-with-example.html
+ *
+ * @author Naresh Joshi
+ */
 public class ExternalizableExample
 {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException
     {
-        Employee empObj = new Employee("Shanti", "Prasad", "Sharma", 25, "IT");
+        Employee empObj = new Employee("Shanti", "Sharma", 25, "IT");
         System.out.println("Object before serialization  => " + empObj.toString());
 
         // Serialization
@@ -57,8 +66,7 @@ public class ExternalizableExample
         private static final long serialVersionUID = 2L;
 
         private String firstName;
-        private transient String middleName; // Using Externalizable, we can even serialize/deserialize transient variables, so declaring fields transient becomes unnecessary.
-        private String lastName;
+        private transient String lastName; // Using Externalizable, we can even serialize/deserialize transient variables, so declaring fields transient becomes unnecessary.
         private int age;
         private static String department; // Using Externalizable, we can even serialize/deserialize static variables according to our need.
 
@@ -70,10 +78,9 @@ public class ExternalizableExample
         }
 
         // All-arg constructor to create objects manually
-        public Employee(String firstName, String middleName, String lastName, int age, String department)
+        public Employee(String firstName, String lastName, int age, String department)
         {
             this.firstName = firstName;
-            this.middleName = middleName;
             this.lastName = lastName;
             this.age = age;
             Employee.department = department;
@@ -91,6 +98,39 @@ public class ExternalizableExample
             }
         }
 
+        @Override
+        // We need to tell what to serialize in writeExternal() method
+        public void writeExternal(ObjectOutput out) throws IOException
+        {
+            System.out.println("Custom externalizable serialization logic invoked.");
+
+            out.writeUTF(firstName);
+            out.writeUTF(lastName);
+            out.writeInt(age);
+            out.writeUTF(department);
+        }
+
+        @Override
+        // We need to tell what to deserialize in readExternal() method
+        // The readExternal method must read the values in the same sequence and with the same types as were written by writeExternal
+        public void readExternal(ObjectInput in) throws IOException
+        {
+            System.out.println("Custom externalizable serialization logic invoked.");
+
+            firstName = in.readUTF();
+            lastName = in.readUTF();
+            age = in.readInt();
+            department = in.readUTF();
+
+            validateAge();
+        }
+
+        @Override
+        public String toString()
+        {
+            return String.format("Employee {firstName='%s', lastName='%s', age='%s', department='%s'}", firstName, lastName, age, department);
+        }
+
         // Custom serialization logic, It will be called only if we have implemented Serializable instead of Externalizable.
         private void writeObject(ObjectOutputStream oos) throws IOException
         {
@@ -102,40 +142,6 @@ public class ExternalizableExample
         {
             System.out.println("Custom deserialization logic invoked.");
         }
-
-        @Override
-        // We need to tell what to serialize in writeExternal() method
-        public void writeExternal(ObjectOutput out) throws IOException
-        {
-            System.out.println("Custom externalizable serialization logic invoked.");
-
-            out.writeUTF(firstName);
-            out.writeUTF(middleName);
-            out.writeUTF(lastName);
-            out.writeInt(age);
-            out.writeUTF(department);
-        }
-
-        @Override
-        // We need to tell what to deserialize in readExternal() method
-        public void readExternal(ObjectInput in) throws IOException
-        {
-            System.out.println("Custom externalizable serialization logic invoked.");
-
-            firstName = in.readUTF();
-            middleName = in.readUTF();
-            lastName = in.readUTF();
-            age = in.readInt();
-            department = in.readUTF();
-
-            validateAge();
-        }
-
-        @Override
-        public String toString()
-        {
-            return String.format("Employee {firstName='%s', middleName='%s', lastName='%s', age='%s', department='%s'}", firstName, middleName, lastName, age, department);
-        }
-
     }
+
 }
