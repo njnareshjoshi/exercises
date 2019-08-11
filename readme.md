@@ -1,4 +1,4 @@
-This repository along with The [articles](https://github.com/njnareshjoshi/articles) repository contains coding examples for my blog [ProgrammingMitra](https://www.programmingmitra.com).
+This repository along with the [articles](https://github.com/njnareshjoshi/articles) repository contains coding examples for my blog [ProgrammingMitra](https://www.programmingmitra.com).
 
 ### Spring
 * [Introduction To Spring](https://www.programmingmitra.com/2016/05/introduction-to-spring.html)
