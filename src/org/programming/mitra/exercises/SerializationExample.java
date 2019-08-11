@@ -10,6 +10,7 @@ import java.io.Serializable;
 
 /**
  * See complete articles on below links.
+ *
  * https://www.programmingmitra.com/2019/08/what-is-serialization-everything-about-java-serialization-explained-with-example.html,
  * https://www.programmingmitra.com/2019/08/how-to-customize-serialization-in-java-by-using-externalizable-interface.html,
  * https://www.programmingmitra.com/2016/05/different-ways-to-create-objects-in-java-with-example.html
