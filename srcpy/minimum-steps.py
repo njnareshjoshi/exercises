@@ -1,14 +1,14 @@
 '''
-Program to calculate mamximum steps require to make a number 1 from n while the steps we can take is
+Program to calculate maximum steps require to make a number 1 from n while the steps we can take is
 subtract by 1, divide by 2 if divisible, divide by 3 if divisible
 '''
 
 def get_min_steps_using_recursion(n):
 
-	print('Solving minimum steps problem using recersion')
+	print('Solving minimum steps problem using recursion')
 
 	if n == 1 :
-		return 0;
+		return 0
 
 	print(f'number is {n} subtracting 1 now number becomes {n-1}')
 	count = get_min_steps_using_recursion(n-1)
@@ -21,7 +21,7 @@ def get_min_steps_using_recursion(n):
 		print(f'number is {n} dividing by 3 now number becomes {int(n/3)}')
 		count = min(count, get_min_steps_using_recursion(int(n/3)))
 
-	return 1 + count;
+	return 1 + count
 
 
 def get_min_steps_using_memoization(n, memo = None):
@@ -79,6 +79,6 @@ def get_min_steps_using_dp(n, dp = None):
 	return dp[n]
 
 
-print(get_min_steps_using_recursion(10));
-print(get_min_steps_using_memoization(10));
-print(get_min_steps_using_dp(10));
+print(get_min_steps_using_recursion(10))
+print(get_min_steps_using_memoization(10))
+print(get_min_steps_using_dp(10))

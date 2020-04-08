@@ -5,11 +5,11 @@ import java.util.Arrays;
 public class KthSmallestNumber {
     public static void main(String[] args) {
         int[] arr = {2, 9, 4, 6, 5, 3, 0, 1, 8, 10};
-        System.out.println(findKthSmallestNumberUsingDnQ(arr, 0, arr.length - 1, 9));
+        System.out.println(findKthSmallestNumberUsingDnC(arr, 0, arr.length - 1, 9));
     }
 
     // Finding kth smallest item using divide and conquer
-    private static int findKthSmallestNumberUsingDnQ(int[] arr, int start, int end, int k) {
+    private static int findKthSmallestNumberUsingDnC(int[] arr, int start, int end, int k) {
         int i = start;
         int j = end;
         int p = (start + end) / 2;
@@ -38,9 +38,9 @@ public class KthSmallestNumber {
         if (lengthOfArrBeforePivot == k - 1) {
             return arr[p];
         } else if (lengthOfArrBeforePivot > k - 1) {
-            return findKthSmallestNumberUsingDnQ(arr, start, lengthOfArrBeforePivot, k);
+            return findKthSmallestNumberUsingDnC(arr, start, lengthOfArrBeforePivot, k);
         } else {
-            return findKthSmallestNumberUsingDnQ(arr, p + 1, end, k - lengthOfArrBeforePivot - 1);
+            return findKthSmallestNumberUsingDnC(arr, p + 1, end, k - lengthOfArrBeforePivot - 1);
         }
     }
 
