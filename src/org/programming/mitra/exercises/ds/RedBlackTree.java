@@ -35,52 +35,11 @@ import static org.programming.mitra.exercises.ds.RedBlackTree.Color.RED;
  */
 public class RedBlackTree {
 
-    public enum Color {
-        RED, BLACK
-    }
-
-    public static class Node {
-        int data;
-        Color color;
-
-        Node parent;
-        Node leftChild;
-        Node rightChild;
-
-        boolean isLeaf;
-    }
-
-    private static Node createBlackNode(int data) {
-        Node node = new Node();
-        node.data = data;
-        node.color = BLACK;
-        node.leftChild = createLeafNode(node);
-        node.rightChild = createLeafNode(node);
-        return node;
-    }
-
-    private static Node createLeafNode(Node parent) {
-        Node leaf = new Node();
-        leaf.color = BLACK;
-        leaf.isLeaf = true;
-        leaf.parent = parent;
-        return leaf;
-    }
-
-    private static Node createRedNode(Node parent, int data) {
-        Node node = new Node();
-        node.data = data;
-        node.color = RED;
-        node.parent = parent;
-        node.leftChild = createLeafNode(node);
-        node.rightChild = createLeafNode(node);
-        return node;
-    }
-
     /**
      * Main insert method of red black tree.
      */
     public Node insert(Node root, int data) {
+        System.out.println("Inserting into tree : " + data);
         return insert(null, root, data);
     }
 
@@ -88,6 +47,7 @@ public class RedBlackTree {
      * Main delete method of red black tree.
      */
     public Node delete(Node root, int data) {
+        System.out.println("Deleting from tree : " + data);
         AtomicReference<Node> rootReference = new AtomicReference<>();
         delete(root, data, rootReference);
         if (rootReference.get() == null) {
@@ -100,8 +60,9 @@ public class RedBlackTree {
     /**
      * Main print method of red black tree.
      */
-    public void printRedBlackTree(Node root) {
-        printRedBlackTree(root, 0);
+    public void printInOrderTree(Node root) {
+        printInOrderTree(root, 0);
+        System.out.println();
     }
 
     /**
@@ -189,11 +150,11 @@ public class RedBlackTree {
 
     private Node insert(Node parent, Node root, int data) {
         if (root == null || root.isLeaf) {
-            //if parent is not null means tree is not empty
-            //so create a red leaf node
+            //if parent is not null means tree is not empty so create a red leaf node
             if (parent != null) {
                 return createRedNode(parent, data);
-            } else { //otherwise create a black root node if tree is empty
+            } else {
+                //otherwise create a black root node if tree is empty
                 return createBlackNode(data);
             }
         }
@@ -476,16 +437,16 @@ public class RedBlackTree {
         }
     }
 
-    private void printRedBlackTree(Node root, int space) {
-        if (root == null || root.isLeaf) {
+    private void printInOrderTree(Node node, int height) {
+        if (node == null || node.isLeaf) {
             return;
         }
-        printRedBlackTree(root.rightChild, space + 5);
-        for (int i = 0; i < space; i++) {
-            System.out.print(" ");
-        }
-        System.out.println(root.data + " " + (root.color == BLACK ? "B" : "R"));
-        printRedBlackTree(root.leftChild, space + 5);
+
+        height++;
+
+        printInOrderTree(node.leftChild, height);
+        System.out.print(node.data + " " + (node.color == BLACK ? "B" : "R") + ", ");
+        printInOrderTree(node.rightChild, height);
     }
 
     private boolean noRedRedParentChild(Node root, Color parentColor) {
@@ -516,18 +477,16 @@ public class RedBlackTree {
         return checkBlackNodesCount(root.leftChild, blackCount, currentCount) && checkBlackNodesCount(root.rightChild, blackCount, currentCount);
     }
 
-    public static void main(String args[]) {
-        Node root = null;
+    public static void main(String[] args) {
         RedBlackTree redBlackTree = new RedBlackTree();
 
-        root = redBlackTree.insert(root, 10);
+        Node root = redBlackTree.insert(null, 10);
         root = redBlackTree.insert(root, 15);
         root = redBlackTree.insert(root, -10);
         root = redBlackTree.insert(root, 20);
         root = redBlackTree.insert(root, 30);
         root = redBlackTree.insert(root, 40);
         root = redBlackTree.insert(root, 50);
-        root = redBlackTree.insert(root, -15);
         root = redBlackTree.insert(root, 25);
         root = redBlackTree.insert(root, 17);
         root = redBlackTree.insert(root, 21);
@@ -538,46 +497,64 @@ public class RedBlackTree {
         root = redBlackTree.insert(root, 26);
         root = redBlackTree.insert(root, 35);
         root = redBlackTree.insert(root, 19);
-        redBlackTree.printRedBlackTree(root);
+        root = redBlackTree.insert(root, -15);
+
+        System.out.println("Inorder RBT looks like:");
+        redBlackTree.printInOrderTree(root);
 
         root = redBlackTree.delete(root, 50);
-        System.out.println(redBlackTree.validateRedBlackTree(root));
         root = redBlackTree.delete(root, 40);
-        System.out.println(redBlackTree.validateRedBlackTree(root));
         root = redBlackTree.delete(root, -10);
-        System.out.println(redBlackTree.validateRedBlackTree(root));
         root = redBlackTree.delete(root, 15);
-        System.out.println(redBlackTree.validateRedBlackTree(root));
         root = redBlackTree.delete(root, 17);
-        System.out.println(redBlackTree.validateRedBlackTree(root));
         root = redBlackTree.delete(root, 24);
-        System.out.println(redBlackTree.validateRedBlackTree(root));
-        root = redBlackTree.delete(root, 21);
-        System.out.println(redBlackTree.validateRedBlackTree(root));
-        root = redBlackTree.delete(root, 32);
-        System.out.println(redBlackTree.validateRedBlackTree(root));
-        root = redBlackTree.delete(root, 26);
-        System.out.println(redBlackTree.validateRedBlackTree(root));
-        root = redBlackTree.delete(root, 19);
-        System.out.println(redBlackTree.validateRedBlackTree(root));
-        root = redBlackTree.delete(root, 25);
-        System.out.println(redBlackTree.validateRedBlackTree(root));
-        root = redBlackTree.delete(root, 17);
-        System.out.println(redBlackTree.validateRedBlackTree(root));
-        root = redBlackTree.delete(root, -15);
-        System.out.println(redBlackTree.validateRedBlackTree(root));
-        root = redBlackTree.delete(root, 20);
-        System.out.println(redBlackTree.validateRedBlackTree(root));
-        root = redBlackTree.delete(root, 35);
-        System.out.println(redBlackTree.validateRedBlackTree(root));
-        root = redBlackTree.delete(root, 34);
-        System.out.println(redBlackTree.validateRedBlackTree(root));
-        root = redBlackTree.delete(root, 30);
-        System.out.println(redBlackTree.validateRedBlackTree(root));
-        root = redBlackTree.delete(root, 28);
-        System.out.println(redBlackTree.validateRedBlackTree(root));
-        root = redBlackTree.delete(root, 10);
-        System.out.println(redBlackTree.validateRedBlackTree(root));
+
+        System.out.println("Final Inorder RBT looks like:");
+        redBlackTree.printInOrderTree(root);
+
+        System.out.println("Is tree balanced : " + redBlackTree.validateRedBlackTree(root));
+    }
+
+    public enum Color {
+        RED, BLACK
+    }
+
+    public static class Node {
+        int data;
+        Color color;
+
+        Node parent;
+        Node leftChild;
+        Node rightChild;
+
+        boolean isLeaf;
+    }
+
+    private static Node createBlackNode(int data) {
+        Node node = new Node();
+        node.data = data;
+        node.color = BLACK;
+        node.leftChild = createLeafNode(node);
+        node.rightChild = createLeafNode(node);
+        return node;
+    }
+
+    private static Node createRedNode(Node parent, int data) {
+        Node node = new Node();
+        node.parent = parent;
+        node.data = data;
+        node.color = RED;
+        node.leftChild = createLeafNode(node);
+        node.rightChild = createLeafNode(node);
+        return node;
+    }
+
+    private static Node createLeafNode(Node parent) {
+        Node leafNode = new Node();
+        leafNode.parent = parent;
+        leafNode.color = BLACK;
+        leafNode.isLeaf = true;
+        return leafNode;
     }
 }
 

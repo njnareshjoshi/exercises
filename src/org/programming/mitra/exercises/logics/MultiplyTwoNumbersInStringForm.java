@@ -1,4 +1,4 @@
-package org.programming.mitra.exercises.practice.logics;
+package org.programming.mitra.exercises.logics;
 
 public class MultiplyTwoNumbersInStringForm {
     public static void main(String[] args) {

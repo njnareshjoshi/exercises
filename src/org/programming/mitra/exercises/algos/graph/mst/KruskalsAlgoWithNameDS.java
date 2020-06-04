@@ -1,9 +1,8 @@
-package org.programming.mitra.exercises.practice.algos.graph.mst;
+package org.programming.mitra.exercises.algos.graph.mst;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 
-public class KruskalsAlgoWithParentDSAndSizeAndPathCompression {
+public class KruskalsAlgoWithNameDS {
     public static void main(String[] args) {
         Graph graph = new Graph(6, 10);
         graph.addEdge(0, 1, 4);
@@ -26,15 +25,14 @@ public class KruskalsAlgoWithParentDSAndSizeAndPathCompression {
         }
     }
 
+
     private static Graph findMST(Graph graph) {
         Edge[] edges = graph.edges;
         Arrays.sort(edges);
 
-        int[] parent = new int[graph.V];
-        int[] size = new int[graph.V];
-        for (int i = 0; i < graph.V; i++) {
-            parent[i] = i;
-            size[i] = 1;
+        int[] name = new int[graph.V];
+        for (int i = 0; i < name.length; i++) {
+            name[i] = i;
         }
 
         int counter = 0;
@@ -42,46 +40,33 @@ public class KruskalsAlgoWithParentDSAndSizeAndPathCompression {
         for (int i = 0; i < graph.E; i++) {
             Edge edge = edges[i];
 
-            int x = find(edge.from, parent);
-            int y = find(edge.to, parent);
+            int x = find(edge.from, name);
+            int y = find(edge.to, name);
             if (x != y) {
                 mstEdges[counter++] = edge;
-                union(x, y, parent, size);
+                union(x, y, name);
             }
         }
 
         return new Graph(graph.V, mstEdges);
     }
 
-    private static void union(int x, int y, int[] parent, int[] size) {
-        // Merging smaller sized tree into larger size tree
-        // Summing up size of bigger tree by smaller tree
-        // Marking size of smaller sized tree 0
-        if (size[x] <= size[y]) {
-            parent[x] = y;
-            size[y] = size[y] + size[x];
-            size[x] = 0;
+    private static void union(int x, int y, int[] name) {
+        if (x < y) {
+            for (int i = 0; i < name.length; i++) {
+                if (name[i] == y)
+                    name[i] = x;
+            }
         } else {
-            parent[y] = x;
-            size[x] = size[x] + size[y];
-            size[y] = 0;
+            for (int i = 0; i < name.length; i++) {
+                if (name[i] == x)
+                    name[i] = y;
+            }
         }
     }
 
-    private static int find(int x, int[] parent) {
-        int temp = x;
-        LinkedList<Integer> list = new LinkedList<>();
-        while (temp != parent[temp]) {
-            temp = parent[temp];
-            list.add(temp);
-        }
-
-        // Flattening the tree, x1->x2->x3->x4->r will become x1->r,x2->r,x3->r,x4->r
-        while (list.size() > 0) {
-            Integer node = list.remove();
-            parent[node] = temp;
-        }
-        return temp;
+    private static int find(int x, int[] name) {
+        return name[x];
     }
 
     private static class Graph {

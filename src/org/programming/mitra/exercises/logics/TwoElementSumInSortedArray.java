@@ -1,4 +1,4 @@
-package org.programming.mitra.exercises.practice.logics;
+package org.programming.mitra.exercises.logics;
 
 import java.util.Arrays;
 import java.util.HashMap;

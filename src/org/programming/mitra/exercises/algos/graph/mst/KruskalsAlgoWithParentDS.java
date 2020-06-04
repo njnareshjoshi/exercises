@@ -1,8 +1,8 @@
-package org.programming.mitra.exercises.practice.algos.graph.mst;
+package org.programming.mitra.exercises.algos.graph.mst;
 
 import java.util.Arrays;
 
-public class KruskalsAlgoWithNameDS {
+public class KruskalsAlgoWithParentDS {
     public static void main(String[] args) {
         Graph graph = new Graph(6, 10);
         graph.addEdge(0, 1, 4);
@@ -30,9 +30,9 @@ public class KruskalsAlgoWithNameDS {
         Edge[] edges = graph.edges;
         Arrays.sort(edges);
 
-        int[] name = new int[graph.V];
-        for (int i = 0; i < name.length; i++) {
-            name[i] = i;
+        int[] parent = new int[graph.V];
+        for (int i = 0; i < parent.length; i++) {
+            parent[i] = i;
         }
 
         int counter = 0;
@@ -40,33 +40,29 @@ public class KruskalsAlgoWithNameDS {
         for (int i = 0; i < graph.E; i++) {
             Edge edge = edges[i];
 
-            int x = find(edge.from, name);
-            int y = find(edge.to, name);
+            int x = find(edge.from, parent);
+            int y = find(edge.to, parent);
             if (x != y) {
                 mstEdges[counter++] = edge;
-                union(x, y, name);
+                union(x, y, parent);
             }
         }
 
         return new Graph(graph.V, mstEdges);
     }
 
-    private static void union(int x, int y, int[] name) {
-        if (x < y) {
-            for (int i = 0; i < name.length; i++) {
-                if (name[i] == y)
-                    name[i] = x;
-            }
-        } else {
-            for (int i = 0; i < name.length; i++) {
-                if (name[i] == x)
-                    name[i] = y;
-            }
-        }
+    private static void union(int x, int y, int[] parent) {
+        if (x < y)
+            parent[y] = x;
+        else
+            parent[x] = y;
     }
 
-    private static int find(int x, int[] name) {
-        return name[x];
+    private static int find(int x, int[] parent) {
+        int temp = x;
+        while (temp != parent[temp])
+            temp = parent[temp];
+        return temp;
     }
 
     private static class Graph {

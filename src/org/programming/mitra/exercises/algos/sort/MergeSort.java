@@ -1,4 +1,4 @@
-package org.programming.mitra.exercises.practice.algos.sort;
+package org.programming.mitra.exercises.algos.sort;
 
 import java.util.Arrays;
 

@@ -1,4 +1,4 @@
-package org.programming.mitra.exercises.practice.algos.graph.mst;
+package org.programming.mitra.exercises.algos.graph.mst;
 
 import java.util.PriorityQueue;
 
@@ -18,7 +18,28 @@ public class PrimsAlgorithmWithHeap {
         graph.addEdge(3, 5, 15);
         graph.addEdge(4, 5, 14);
 
+        System.out.println("For below tree:");
+        System.out.println(
+                        "               /0\\\n" +
+                        "              /   \\ \n" +
+                        "            4/     \\7\n" +
+                        "            /   8   \\\n" +
+                        "           1 ------- 2\n" +
+                        "           | \\11  12/|\n" +
+                        "         13|   \\  /  | 10\n" +
+                        "           |   / \\   |\n" +
+                        "           |  /   \\  |\n" +
+                        "           | /     \\ |\n" +
+                        "           3 ------- 4\n" +
+                        "            \\   9   /\n" +
+                        "           15\\     /14\n" +
+                        "              \\   /\n" +
+                        "               \\5/"
+        );
+
         Edge[] mstEdges = findMST(graph);
+
+        System.out.println("Minimum spanning tree generated through PrimsAlgo contains edges:");
         for (int i = 0; i < mstEdges.length; i++) {
             System.out.println(mstEdges[i]);
         }
@@ -95,7 +116,7 @@ public class PrimsAlgorithmWithHeap {
 
         @Override
         public String toString() {
-            return String.format("Edge %d -> %d with weight=%d", from, to, weight);
+            return String.format("%d -> %d with weight=%d", from, to, weight);
         }
     }
 }

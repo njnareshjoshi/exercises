@@ -1,8 +1,9 @@
-package org.programming.mitra.exercises.practice.algos.graph.mst;
+package org.programming.mitra.exercises.algos.graph.mst;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 
-public class KruskalsAlgoWithParentDSAndSize {
+public class KruskalsAlgoWithParentDSAndSizeAndPathCompression {
     public static void main(String[] args) {
         Graph graph = new Graph(6, 10);
         graph.addEdge(0, 1, 4);
@@ -24,7 +25,6 @@ public class KruskalsAlgoWithParentDSAndSize {
             System.out.println(edges[i]);
         }
     }
-
 
     private static Graph findMST(Graph graph) {
         Edge[] edges = graph.edges;
@@ -70,8 +70,17 @@ public class KruskalsAlgoWithParentDSAndSize {
 
     private static int find(int x, int[] parent) {
         int temp = x;
-        while (temp != parent[temp])
+        LinkedList<Integer> list = new LinkedList<>();
+        while (temp != parent[temp]) {
             temp = parent[temp];
+            list.add(temp);
+        }
+
+        // Flattening the tree, x1->x2->x3->x4->r will become x1->r,x2->r,x3->r,x4->r
+        while (list.size() > 0) {
+            Integer node = list.remove();
+            parent[node] = temp;
+        }
         return temp;
     }
 

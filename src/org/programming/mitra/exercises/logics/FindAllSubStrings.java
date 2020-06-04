@@ -1,4 +1,4 @@
-package org.programming.mitra.exercises.practice.logics;
+package org.programming.mitra.exercises.logics;
 
 // SubStrings or SubArrays of 1234 are 1,12,123,1234,2,23,234,3,34,4
 // An string of size n can have n*(n+1)/2 substrings

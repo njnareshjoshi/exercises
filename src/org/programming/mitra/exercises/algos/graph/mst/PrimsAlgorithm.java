@@ -1,4 +1,4 @@
-package org.programming.mitra.exercises.practice.algos.graph.mst;
+package org.programming.mitra.exercises.algos.graph.mst;
 
 import java.util.Arrays;
 
