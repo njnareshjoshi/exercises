@@ -3,6 +3,8 @@ package org.programming.mitra.exercises;
 /**
  * @author Naresh Joshi
  *
+ * Why Instance Variable Of Super Class Is Not Overridden In Sub Class
+ *
  * See complete articles on below links
  *
  * https://www.programmingmitra.com/2018/11/why-instance-variable-of-super-class-is-not-overridden-In-sub-class.html,
@@ -11,35 +13,32 @@ package org.programming.mitra.exercises;
  * https://www.programmingmitra.com/2017/05/how-does-jvm-handle-method-overriding-internally.html,
  */
 public class VariableShadowingExample {
-
-    public static void main(String[] args) throws Exception {
-
-        Parent parent = new Parent();
-        parent.printInstanceVariable(); // Output - "Parent`s Instance Variable"
-        System.out.println(parent.x); // Output - "Parent`s Instance Variable"
+    public static void main(String[] args) {
+        Parent parent1 = new Parent();
+        parent1.printInstanceVar(); // Output - "Parent`s Instance Variable"
+        System.out.println(parent1.x); // Output - "Parent`s Instance Variable"
 
         Child child = new Child();
-        child.printInstanceVariable();// Output - "Child`s Instance Variable, Parent`s Instance Variable"
+        child.printInstanceVar();// Output - "Child`s Instance Variable, Parent`s Instance Variable"
         System.out.println(child.x);// Output - "Child`s Instance Variable"
 
-        parent = child; // Or parent = new Child();
-        parent.printInstanceVariable();// Output - "Child`s Instance Variable, Parent`s Instance Variable"
-        System.out.println(parent.x);// Output - Parent`s Instance Variable
+        Parent parent2 = new Child();
+        parent2.printInstanceVar();// Output - "Child`s Instance Variable, Parent`s Instance Variable"
+        System.out.println(parent2.x);// Output - Parent`s Instance Variable
 
         // Accessing child's variable from parent's reference by type casting
-        System.out.println(((Child) parent).x);// Output - "Child`s Instance Variable"
+        System.out.println(((Child) parent2).x);// Output - "Child`s Instance Variable"
     }
 
     static class Parent {
-
         // Declaring instance variable by name `x`
         String x = "Parent`s Instance Variable";
 
-        public void printInstanceVariable() {
+        public void printInstanceVar() {
             System.out.println(x);
         }
 
-        public void printLocalVariable() {
+        public void printLocalVar() {
             // Shadowing instance variable `x` by a local variable with same name
             String x = "Local Variable";
             System.out.println(x);
@@ -55,7 +54,7 @@ public class VariableShadowingExample {
         String x = "Child`s Instance Variable";
 
         @Override
-        public void printInstanceVariable() {
+        public void printInstanceVar() {
             System.out.print(x);
 
             // If we still want to access variable from super class, we do that by using `super.x`
@@ -63,5 +62,4 @@ public class VariableShadowingExample {
         }
     }
 }
-
 
