@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
+import java.util.Objects;
 
 /**
  * @author Naresh Joshi
@@ -15,138 +16,96 @@ import java.lang.reflect.Constructor;
  * https://www.programmingmitra.com/2016/05/different-ways-to-create-objects-in-java-with-example.html,
  * https://www.programmingmitra.com/2016/05/creating-objects-through-reflection-in-java-with-example.html
  */
-public class ObjectCreation
-{
-    public static void main(String... args) throws Exception
-    {
+public class ObjectCreation {
+    public static void main(String... args) throws Exception {
 
-        // By using new keyword
+        // 1. By using new keyword
         Employee emp1 = new Employee();
-        emp1.setName("Naresh");
-
-        System.out.println(emp1 + ", hashcode : " + emp1.hashCode());
+        emp1.setName("emp1");
 
 
-        // By using Class class's newInstance() method
-        Employee emp2 = (Employee) Class.forName("org.programming.mitra.exercises.Employee").newInstance();
-
-        // Or we can simply do this
-        // Employee emp2 = Employee.class.newInstance();
-
-        emp2.setName("Rishi");
-
-        System.out.println(emp2 + ", hashcode : " + emp2.hashCode());
+        // 2. By using Class class's newInstance() method
+        // Employee emp2 = (Employee) Class.forName("org.programming.mitra.exercises.Employee").newInstance();
+        Employee emp2 = Employee.class.newInstance();
+        emp2.setName("emp2");
 
 
-        // By using Constructor class's newInstance() method
+        // 3. By using Constructor class's newInstance() method
         Constructor<Employee> constructor = Employee.class.getConstructor();
+
         Employee emp3 = constructor.newInstance();
-        emp3.setName("Yogesh");
+        emp3.setName("emp3");
 
-        System.out.println(emp3 + ", hashcode : " + emp3.hashCode());
-
-        // By using clone() method
+        // 4. By using clone() method
         Employee emp4 = (Employee) emp3.clone();
-        emp4.setName("Atul");
-
-        System.out.println(emp4 + ", hashcode : " + emp4.hashCode());
+        emp4.setName("emp4");
 
 
-        // By using Deserialization
+        // 5. By using Deserialization
 
         // Serialization
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("data.obj"));
-
-        out.writeObject(emp4);
-        out.close();
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("data.obj"))) {
+            out.writeObject(emp4);
+        }
 
         //Deserialization
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("data.obj"));
-        Employee emp5 = (Employee) in.readObject();
-        in.close();
+        Employee emp5;
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("data.obj"))) {
+            emp5 = (Employee) in.readObject();
+            emp5.setName("emp5");
+        }
 
-        emp5.setName("Akash");
+        System.out.println(emp1 + ", hashcode : " + emp1.hashCode());
+        System.out.println(emp2 + ", hashcode : " + emp2.hashCode());
+        System.out.println(emp3 + ", hashcode : " + emp3.hashCode());
+        System.out.println(emp4 + ", hashcode : " + emp4.hashCode());
         System.out.println(emp5 + ", hashcode : " + emp5.hashCode());
-
     }
 }
 
-class Employee implements Cloneable, Serializable
-{
+class Employee implements Cloneable, Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String name;
 
-    public Employee()
-    {
+    public Employee() {
         System.out.println("Employee Constructor Called...");
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
     @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return Objects.equals(name, employee.name);
     }
 
     @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (getClass() != obj.getClass())
-        {
-            return false;
-        }
-        Employee other = (Employee) obj;
-        if (name == null)
-        {
-            if (other.name != null)
-            {
-                return false;
-            }
-        } else if (!name.equals(other.name))
-        {
-            return false;
-        }
-        return true;
+    public int hashCode() {
+        return Objects.hash(name);
     }
 
     @Override
-    public String toString()
-    {
-        return "Employee [name=" + name + "]";
+    public String toString() {
+        return String.format("Employee{name='%s'}", name);
     }
 
     @Override
-    public Object clone()
-    {
+    public Object clone() {
 
         Object obj = null;
-        try
-        {
+        try {
             obj = super.clone();
-        } catch (CloneNotSupportedException e)
-        {
+        } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
         return obj;
